@@ -107,6 +107,11 @@ app.get("/audience-list-search",(req,res)=>{
         })
 })
 
-app.listen(8080, () => {
+
+app.use("/",(req,res)=>{
+    res.send("Server is running.")
+})
+
+app.listen(5000, () => {
     console.log('Connected to backend!');
 })
