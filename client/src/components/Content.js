@@ -7,7 +7,7 @@ import env from "react-dotenv";
 
 export default function Content() {
   const [selectionType, setSelectionType] = useState("checkbox");
-  const [tagList, setTagList] = useState();
+  const [tagList, setTagList] = useState([]);
   const [audienceList, setAudienceList] = useState([]);
   const [searchValue, setSearchValue] = useState();
   const [selectionTag, setSelectionTag] = useState();
