@@ -43,7 +43,6 @@ export default function Sidebar() {
     sidebar: !isOpen,
   });
 
-  console.log(isOpen);
 
   useEffect(() => {
     const handleResize = () => {

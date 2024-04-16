@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router();
 const db = require('../db')
+const cors = require('cors')
 
+const app = express();
+app.use(cors());
 
 router.get("/tags", (req, res) => {
     const q = "SELECT name FROM tags"
