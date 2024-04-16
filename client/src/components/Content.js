@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Table, Input, Select, Image, Avatar } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
-import env from "react-dotenv";
 
 
 export default function Content() {
@@ -12,7 +11,6 @@ export default function Content() {
   const [searchValue, setSearchValue] = useState();
   const [selectionTag, setSelectionTag] = useState();
   const [selectionStatus, setSelectionStatus] = useState();
-  const apiUrl = env.API_URL
 
   const columns = [
     {
@@ -50,7 +48,9 @@ export default function Content() {
 
   async function getTagsList() {
     try {
-      const res = await axios.get(`https://project-test-backend.vercel.app/tags`);
+       const res = await axios.get(`https://project-test-backend.vercel.app/tags`);
+      //const res = await axios.get(`http://localhost:5000/tags`);
+
       let tagsArray = [];
       if (res.data && res.data.length > 0) {
         res.data.map((item) => {
@@ -69,6 +69,8 @@ export default function Content() {
   async function getAudienceList() {
     try {
       const res = await axios.get(`https://project-test-backend.vercel.app/audience-list`);
+      //const res = await axios.get(`http://localhost:5000/audience-list`);
+
       if (res.data && res.data.length > 0) setAudienceList(res.data);
       else setAudienceList([]);
     } catch (err) {
@@ -79,7 +81,9 @@ export default function Content() {
   async function getSearchResult() {
     if(searchValue !== undefined || selectionTag !== undefined || selectionStatus !== undefined){
     try {
-      const res = await axios.get(`https://project-test-backend.vercel.app/audience-list-search?search=${searchValue}&tag=${selectionTag}&status=${selectionStatus}`);
+       const res = await axios.get(`https://project-test-backend.vercel.app/audience-list-search?search=${searchValue}&tag=${selectionTag}&status=${selectionStatus}`);
+      //const res = await axios.get(`http://localhost:5000/audience-list-search?search=${searchValue}&tag=${selectionTag}&status=${selectionStatus}`);
+
       if (res.data && res.data.length > 0) setAudienceList(res.data);
       else setAudienceList([]);
     } catch (err) {

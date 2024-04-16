@@ -52,8 +52,17 @@ router.get("/audience-list-search",(req,res)=>{
                      GROUP BY users_to_tags.user_id,users.name 
                     `
 
-        if(search !== 'undefined' && search !== null && search !== ''){
-            sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '${tag !== 'undefined'  ? tag : search}' OR users.name LIKE '%${search}%' OR status='${status !== 'undefined'  ? status : search}'`
+        if(search !== 'undefined' && search !== null && search !== '' && tag === 'undefined' && status === 'undefined'){
+            sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '%${search}%' OR users.name LIKE '%${search}%' OR status='${search}'`
+        }
+        else if(search !== 'undefined' && search !== null && search !== '' && tag !== 'undefined' && status !== 'undefined'){
+            sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '%${tag}%' AND users.name LIKE '%${search}%' AND status='${status}'`
+        }
+        else if(search !== 'undefined' && search !== null && search !== '' && tag !== 'undefined'){
+            sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '%${tag}%' AND users.name LIKE '%${search}%'`
+        }
+        else if(search !== 'undefined' && search !== null && search !== '' && status !=='undefined'){
+            sql += `HAVING  users.name LIKE '%${search}%' AND status='${status}'`
         }
          else{
              if(tag !== 'undefined' && status !== 'undefined' && (search === 'undefined ' || search !== null || search !== ''))
@@ -66,6 +75,7 @@ router.get("/audience-list-search",(req,res)=>{
              }
          }
 
+         console.log(sql);
         db.query(sql,(err,data)=>{
             if(err) return res.json()
             else{
