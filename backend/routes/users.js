@@ -11,13 +11,6 @@ router.get("/tags", (req, res) => {
     })
 })
 
-router.get("/users",(req,res)=>{
-    const sql = "SELECT * FROM users"
-    db.query(sql,(err,data)=>{
-        if(err) return res.json()
-        return res.json(data)
-    })
-})
 
 router.get("/audience-list",(req,res)=>{
     const search = req.query.search
@@ -54,25 +47,21 @@ router.get("/audience-list-search",(req,res)=>{
                      INNER JOIN tags ON (tags.id = users_to_tags.tag_id)  
                      WHERE users_to_tags.user_id IN(SELECT user_id FROM users_to_tags GROUP BY user_id)
                      GROUP BY users_to_tags.user_id,users.name 
-                     HAVING JSON_ARRAYAGG(tags.name) LIKE '%${tag!==undefined ? tag : search}%' OR users.name LIKE '%${search}%' OR status='${status!== undefined ? status : search}'
-                  `
+                    `
 
-        // if(search !== undefined)
-        //     sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '${tag ? tag : search}' OR users.name LIKE '%${search}%' OR status='${status ? status : search}' LIMIT 10`
-        // else{
-        //     if(tag && status)
-        //         sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '${tag}' AND status='${status}' LIMIT 10`
-        //     else{
-        //         if(tag)
-        //             sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '%${tag}%'`
-        //         if(status)
-        //             sql += `HAVING status='${status}' LIMIT 10`
-        //     }
-
-        // }
-
-        console.log(sql);
-
+        if(search !== 'undefined' && search !== null && search !== ''){
+            sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '${tag !== 'undefined'  ? tag : search}' OR users.name LIKE '%${search}%' OR status='${status !== 'undefined'  ? status : search}'`
+        }
+         else{
+             if(tag !== 'undefined' && status !== 'undefined' && (search === 'undefined ' || search !== null || search !== ''))
+                 sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '%${tag}%' AND status='${status}'`
+             else{
+                 if(tag !== 'undefined')
+                     sql += `HAVING JSON_ARRAYAGG(tags.name) LIKE '%${tag}%'`
+                 if(status !== 'undefined')
+                     sql += `HAVING status='${status}'`
+             }
+         }
 
         db.query(sql,(err,data)=>{
             if(err) return res.json()

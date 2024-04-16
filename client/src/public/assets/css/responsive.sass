@@ -1,0 +1,52 @@
+@media (min-width: 1280px) and (max-width: 1681px)
+@media (min-width: 1024px) and (max-width: 1279px)
+@media (min-width: 768px) and (max-width: 1023px)   
+@media (max-width: 767px)
+
+    body
+        overflow: auto
+    .panel-wrapper
+        flex-direction: column
+        overflow: auto
+        .mobile-menu
+            display: flex
+        .sidebar
+            width: 100%
+            padding: 0
+            display: none
+        .sidebar-mobile
+            display: none   
+        .mobile-only.open
+            display: flex
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
+            position: absolute
+            background-color: white
+            z-index: 9
+            height: max-content
+            left: 0
+            padding: 15px
+            width: 100%
+            box-sizing: border-box
+        .content
+            width: 100%
+            padding: 0
+            .table-main
+                overflow: hidden
+                overflow-x: auto
+                width: 100% 
+            .filter-bar 
+                flex-direction: column
+                .select-bar 
+                    flex-direction: column
+                    width: 100%
+                    .ant-select
+                        width: 100%
+                .ant-input-affix-wrapper 
+                    width: 100% 
+            .header
+                flex-direction: column
+                .header-text-box 
+                    width: 100%
+                    align-items: center
+                    .cs-desc
+                        text-align: center
