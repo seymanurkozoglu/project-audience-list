@@ -50,7 +50,7 @@ export default function Content() {
 
   async function getTagsList() {
     try {
-      const res = await axios.get(`https://project-test-backend.vercel.ap/tags`);
+      const res = await axios.get(`https://project-test-backend.vercel.app/tags`);
       let tagsArray = [];
       if (res.data && res.data.length > 0) {
         res.data.map((item) => {
@@ -68,7 +68,7 @@ export default function Content() {
 
   async function getAudienceList() {
     try {
-      const res = await axios.get(`https://project-test-backend.vercel.ap/audience-list`);
+      const res = await axios.get(`https://project-test-backend.vercel.app/audience-list`);
       if (res.data && res.data.length > 0) setAudienceList(res.data);
       else setAudienceList([]);
     } catch (err) {
@@ -79,7 +79,7 @@ export default function Content() {
   async function getSearchResult() {
     if(searchValue !== undefined || selectionTag !== undefined || selectionStatus !== undefined){
     try {
-      const res = await axios.get(`https://project-test-backend.vercel.ap/audience-list-search?search=${searchValue}&tag=${selectionTag}&status=${selectionStatus}`);
+      const res = await axios.get(`https://project-test-backend.vercel.app/audience-list-search?search=${searchValue}&tag=${selectionTag}&status=${selectionStatus}`);
       if (res.data && res.data.length > 0) setAudienceList(res.data);
       else setAudienceList([]);
     } catch (err) {
